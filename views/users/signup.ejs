@@ -1,0 +1,107 @@
+<% layout('layouts/boilerplate.ejs') -%>
+    <style>
+        .box1 {
+            padding: 1rem 2rem 2rem 2rem;
+            flex: 1;
+            /* Make the form take equal space */
+        }
+        
+        .f-info {
+            display: none;
+        }
+        
+        .img-card {
+            flex: 1;
+            /* Make image take equal space */
+            text-align: center;
+            /* Center the image */
+            display: flex;
+            align-items: center;
+            /* Vertically center the image */
+            justify-content: center;
+            /* Horizontally center the image */
+            position: relative;
+            /* Required for the pseudo-element */
+        }
+        
+        .img-card img {
+            max-width: 100%;
+            /* Ensure the image doesn't overflow */
+            height: 100%;
+            /* Make the image cover the height of the div */
+            object-fit: cover;
+            /* Ensure the image covers the entire space */
+            border-radius: 1rem;
+            /* Optional: Add border radius to the image */
+        }
+        
+        .main-box {
+            display: flex;
+            align-items: stretch;
+            /* Stretch items to match height */
+            justify-content: space-between;
+            /* Add space between the image and form */
+            gap: 2rem;
+            /* Add some gap between the image and form */
+            padding: 2rem;
+            /* Add some padding around the main box */
+            border: 2px solid black;
+            /* Add border to the main box */
+            box-shadow: 0 0 5px #fe424d;
+            height: 550px;
+            border-radius: 0.5rem;
+            background-color: white;
+        }
+        /* Add a line between the image and the form */
+        
+        .img-card::after {
+            content: '';
+            position: absolute;
+            right: -1rem;
+            /* Position the line to the right of the image */
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            /* Line thickness */
+            background-color: black;
+            /* Line color */
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffffff, hsl(357, 91%, 92%))
+        }
+    </style>
+
+    <div class="main-box mt-4">
+        <div class="img-card">
+            <img src="/Assets/signupimg2.jpg" alt="Signup Image" class="img">
+        </div>
+        <div class="box1">
+            <h1 class="col-12 offset-2">Signup on StaySphere</h1>
+            <!-- Username -->
+            <form action="./signup" method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" id="username" required>
+                    <div class="valid-feedback">
+                        Good😀!
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="password" required>
+                </div>
+
+                <!-- Button -->
+                <button class="btn btn-dark">SignUp</button>
+            </form>
+        </div>
+    </div>
