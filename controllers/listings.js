@@ -9,9 +9,21 @@ const geocoder = require('node-geocoder')({
 
 
 module.exports.index = async(req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index", { allListings });
+    // const allListings = await Listing.find({});
+    // res.render("listings/index", { allListings });
+
+    const { category } = req.query;
+    let allListings;
+
+    if (category) {
+        allListings = await Listing.find({ category });
+    } else {
+        allListings = await Listing.find({});
+    }
+
+    res.render("listings/index", { allListings, selectedCategory: category });
 };
+
 
 module.exports.renderNewForm = (req, res) => {
 
@@ -53,11 +65,12 @@ module.exports.createListing = async(req, res, next) => {
     let url = req.file.path;
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
+    newListing.amenities = req.body.listing.amenities || [];
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
 
     newListing.latitude = latitude; // Save latitude
-    newListing.longitude = longitude; // Save longitude
+    newListing.longitude = longitude;
 
 
     await newListing.save();
@@ -67,7 +80,7 @@ module.exports.createListing = async(req, res, next) => {
 
 module.exports.renderEditForm = async(req, res) => {
     const { id } = req.params;
-    const trimmedId = id.trim(); // Remove leading/trailing spaces
+    const trimmedId = id.trim();
     const listing = await Listing.findById(trimmedId);
     if (!listing) {
         req.flash("error", "Listing not found");
@@ -81,7 +94,30 @@ module.exports.renderEditForm = async(req, res) => {
 
 module.exports.updateListing = async(req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing });
+
+
+    let listingData = {...req.body.listing };
+
+    // If location is being updated, geocode the new location
+    if (listingData.location) {
+        const geocodeResult = await geocoder.geocode(listingData.location);
+
+        // If geocodeResult is empty, location is invalid
+        if (!geocodeResult.length) {
+            req.flash('error', 'Invalid city name');
+            return res.redirect(`/listings/${id}/edit`);
+        }
+
+        // Extract latitude and longitude from the geocode result
+        const { latitude, longitude } = geocodeResult[0];
+        listingData.latitude = latitude;
+        listingData.longitude = longitude;
+    }
+
+    // Update the listing with all data including potential new coordinates
+    let listing = await Listing.findByIdAndUpdate(id, listingData, { new: true });
+
+    listing.amenities = req.body.listing.amenities || [];
     if (typeof req.file !== "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;
@@ -95,10 +131,8 @@ module.exports.updateListing = async(req, res) => {
 };
 
 module.exports.deleteListing = async(req, res) => {
-
     const { id } = req.params;
-    await Listing.findByIdAndDelete(id); // Delete the listing by ID
+    await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing Deleted successfully");
-    res.redirect("/listings"); // Redirect to the listings page after deletion
-
+    res.redirect("/listings");
 };

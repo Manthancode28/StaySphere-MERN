@@ -22,13 +22,14 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 // Search Route
 router.get("/search", async(req, res) => {
     try {
+        const { checkin, checkout } = req.query;
         const { location } = req.query; // Extract location from the query string
         const allListings = await Listing.find({
             location: { $regex: location, $options: "i" } // Case-insensitive partial match
         });
 
         // Render the EJS template with filtered results
-        res.render("listings", { allListings }); // Pass the results to the 'listings.ejs' view
+        res.render("listings", { allListings, checkin, checkout }); // Pass the results to the 'listings.ejs' view
     } catch (err) {
         console.error(err);
         res.status(500).send("An error occurred while fetching listings.");

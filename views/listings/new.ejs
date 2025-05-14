@@ -21,6 +21,74 @@
                         </div>
                     </div>
 
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="listing[category]" class="form-control" required>
+                            <option value="">Select a category</option>
+                            <option value="Trending">Trending</option>
+                            <option value="Room">Room</option>
+                            <option value="Iconic City">Iconic City</option>
+                            <option value="Mountains">Mountains</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Amazing Pool">Amazing Pool</option>
+                            <option value="Farms">Farms</option>
+                            <option value="Arctic">Arctic</option>
+                            <option value="Camping">Camping</option>
+                            <option value="Sea">Sea</option>
+                            <option value="Homes">Sea</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a category.</div>
+                    </div>
+
+                    <!-- What this place offer  -->
+                    <div class="mb-4">
+                        <label class="fw-bold mb-2">What this place offers:</label>
+                        <div class="d-flex flex-wrap gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Lake view" id="lakeView">
+                                <label class="form-check-label" for="lakeView">Lake view</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Mountain view" id="mountainView">
+                                <label class="form-check-label" for="mountainView">Mountain view</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Air conditioning" id="airConditioning">
+                                <label class="form-check-label" for="airConditioning">Air Conditioning</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Board Games" id="boardGames">
+                                <label class="form-check-label" for="boardGames">Board Games</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Hot Water" id="hotWater">
+                                <label class="form-check-label" for="hotWater">Hot Water</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="WIfi" id="wifi">
+                                <label class="form-check-label" for="wifi">Wi-Fi</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Dedicated workspace" id="workspace">
+                                <label class="form-check-label" for="workspace">Dedicated Workspace</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Free parking on premises" id="parking">
+                                <label class="form-check-label" for="parking">Free Parking</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="TV" id="tv">
+                                <label class="form-check-label" for="tv">TV</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="listing[amenities]" value="Kitchen" id="kitchen">
+                                <label class="form-check-label" for="kitchen">Kitchen</label>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="mb-3">
                         <label for="image" class="form-label">Upload Image</label>
                         <input type="file" name="listing[image]" placeholder="Enter image URL" class="form-control" required>

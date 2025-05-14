@@ -1,24 +1,54 @@
 <% layout('layouts/boilerplate.ejs') -%>
 
+
+    <style>
+        /* Responsive image */
+        
+        @media (max-width: 768px) {
+            .amenities-container-in {
+                grid-template-columns: 1fr;
+            }
+            .date-input {
+                flex: 1 1 100%;
+            }
+            .reviews-grid .card {
+                width: 100%;
+                margin-left: 0 !important;
+            }
+        }
+    </style>
+
     <body>
         <!-- Listing Information -->
-        <div class="row mt-3">
-            <div class="col-8 offset-3">
+        <div class="row mt-3 ">
+            <div class="col-12 col-md-8 offset-md-2">
+                <!--Changes 1 for mobile view-->
                 <h3><b><%= listing.title %></b> </h3>
             </div>
             <!-- Listing image and other information -->
-            <div>
-                <div class="card col-md-6 offset-3 listing-card show-card">
+            <div class="col-12 col-md-8 offset-md-2">
+                <!--Changes 2 for mobile view-->
+                <div class=" card listing-card show-card">
                     <!-- Always make seperate div for image and seperate div for other information -->
+
+
                     <img src="  <%= listing.image.url %> " class="card-img-top" alt="...">
                     <div class="card-body">
-                        <p class="card-text">
-                            Owned by:<i><%= listing.owner.username %></i>
+                        <p class="card-text" style="font-weight: 500;">
+                            <i class="fas fa-crown me-1 text-warning"></i> Owned by:
+                            <%= listing.owner.username %>
                         </p>
+                        <p class="card-text" style="font-size: 1.5rem;">
+                            Room in
+                            <%= listing.location %>,
+                                <%= listing.country %>
+                        </p>
+
                         <p class="card-text">
                             <%= listing.description %>
                         </p>
-                        <p class="card-text"><b>Price : </b> &#8377;
+
+                        <!-- <p class="card-text fs-4 text-dark"><b></b> &#8377;
                             <%= listing.price.toLocaleString("en-IN") %>
                         </p>
                         <p class="card-text"><b>Location : </b>
@@ -26,8 +56,146 @@
                         </p>
                         <p class="card-text"><b>Country : </b>
                             <%= listing.country %>
+                        </p> -->
+
+                        <div class="d-flex align-items-baseline mb-2">
+                            <span class="fs-4 ">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                            <span class="text-muted ms-1">/night</span>
+                        </div>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt text-danger me-1"></i>
+                            <%= listing.location %>,
+                                <%= listing.country %>
+
+                                    </a>
                         </p>
+
+                        <!-- <div class="details-compact">
+                            <div class="price-badge bg-light rounded-pill px-3 py-2 d-inline-block mb-2">
+                                <span class="fw-bold">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                                <span class="text-muted small"> /night</span>
+                            </div>
+
+                            <div class="location-wrap">
+                                <i class="fas fa-map-marker-alt text-danger me-1 small"></i>
+                                <span class="fw-medium">
+                                <%= listing.location %>, <%= listing.country %>
+                              </span>
+                            </div>
+                        </div> -->
+                        <hr>
+
+                        <!-- What This Place offres -->
+                        <% if (listing.amenities && listing.amenities.length > 0) { %>
+                            <div class="col-md-8  mt-4 amenities-container">
+                                <h5><b>What this place offers</b></h5>
+                                <div class="row amenities-container-in g-1" style="margin-top: 0.8rem !important;">
+                                    <% listing.amenities.forEach((amenity) => { 
+                                        const icon = getAmenityIcon(amenity); // Implement this function
+                                    %>
+                                        <div class="col-6 mb-2 amenities-icons">
+                                            <i class="<%= icon %>"></i> &nbsp; &nbsp;&nbsp;
+                                            <%= amenity %>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </div>
+                            <hr>
+                            <% } %>
+
+
                     </div>
+
+                    <!-- Booking -->
+                    <!-- <div class="mb-3 mt-3">
+                        <% if (!listing.owner.equals(currUser?._id)) { %>
+                            <form action="/bookings/listings/<%= listing._id %>/book" method="POST">
+                                <label>Check-in:</label>
+                                <input type="date" name="checkIn" required />
+
+                                <label>Check-out:</label>
+                                <input type="date" name="checkOut" required />
+
+                                <label>Guests:</label>
+                                <input type="number" name="guests" min="1" required />
+
+                                <button type="submit">Request to Book</button>
+                            </form>
+                            <% } %>
+                    </div> -->
+
+                    <div class="booking-container mt-3 mb-3">
+                        <% if (!listing.owner.equals(currUser?._id)) { %>
+                            <form action="/bookings/listings/<%= listing._id %>/book" method="POST" class="booking-form">
+
+                                <div class="price-header">
+                                    <div class="price-per-night">
+                                        <span class="amount">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                                        <span class="text">per night</span>
+                                    </div>
+
+                                    <div class="badge">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Book with confidence</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- Date Picker -->
+                                <div class="date-picker">
+                                    <div class="date-input check-in">
+                                        <label>Check In</label>
+                                        <input type="date" name="checkIn" required>
+                                        <!-- <i class="fas fa-calendar-alt"></i> -->
+                                    </div>
+                                    <div class="date-input check-out">
+                                        <label>Check Out</label>
+                                        <input type="date" name="checkOut" required>
+                                        <!-- <i class="fas fa-calendar-alt"></i> -->
+                                    </div>
+                                </div>
+
+                                <!-- Guests Selector -->
+                                <div class="guests-selector">
+                                    <label>Guests</label>
+                                    <select name="guests" required>
+                                <option value="" disabled selected>How many guests?</option>
+                                <% for(let i = 1; i <= 10; i++) { %>
+                                  <option value="<%= i %>"><%= i %> guest<%= i > 1 ? 's' : '' %></option>
+                                <% } %>
+                              </select>
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+
+                                <!-- Book Now Button -->
+                                <button type="submit" class="book-now-btn">
+                              <i class="fas fa-lock"></i> Instant Book Now
+                            </button>
+
+                                <!-- Price Breakdown -->
+                                <div class="price-breakdown">
+                                    <div class="price-row">
+                                        <span>Service fee</span>
+                                        <span>₹<%= Math.round(listing.price * 0.12).toLocaleString("en-IN") %></span>
+                                    </div>
+                                    <div class="price-row total">
+                                        <span>Total</span>
+                                        <span>₹<%= Math.round(listing.price + listing.price*0.12).toLocaleString("en-IN") %></span>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <hr>
+                            <% } %>
+                    </div>
+
+
+                    <!-- Map -->
+                    <h4 class="mt-4">The Adventure Begins Here</h4>
+                    <div id="map" style="height: 400px; position: relative;" class="mb-4 rounded">
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -35,7 +203,7 @@
         <!-- Buttons and Review -->
         <div class="row mb-4">
             <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-                <div class="offset-3 show-btn col-md-6">
+                <div class="col-12 col-md-8 offset-md-2 show-btn">
                     <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark " style="height: 40px; background-color: #fe424d; border:none;">Edit</a>
                     <br><br>
                     <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
@@ -45,7 +213,7 @@
                 <% } %>
                     <hr>
                     <!-- Reviews -->
-                    <div class="col-8 offset-3 mb-3">
+                    <div class="col-12 col-md-8 offset-md-2 mb-3    ">
                         <% if(currUser) { %>
                             <h4>
                                 Leave a Review
@@ -84,25 +252,27 @@
 
                                 <% if(listing.reviews.length > 0) { %>
                                     <div class="row">
-                                        <p><b>All Reviews</b></p>
+                                        <p class="h5"><b>All Reviews</b></p>
                                         <% for(review of listing.reviews) { %>
-                                            <div class="card col-5 ms-3 mb-3">
-                                                <div class="card-body">
+                                            <div class="col-12 col-md-6 col-lg-5 mb-3 mt-2">
+                                                <div class="card h-100 py-2 px-1">
+                                                    <div class="card-body">
 
-                                                    <h5 class="card-title">
-                                                        <%= review.author.username %>
-                                                    </h5>
+                                                        <h5 class="card-title">
+                                                            <%= review.author.username %>
+                                                        </h5>
 
-                                                    <p class="starability-result card-text" data-rating="<%=review.rating%>">
-                                                    </p>
+                                                        <p class="starability-result card-text" data-rating="<%=review.rating%>">
+                                                        </p>
 
-                                                    <p class="card-text">
-                                                        <%= review.comment %>
-                                                    </p>
+                                                        <p class="card-text">
+                                                            <%= review.comment %>
+                                                        </p>
 
-                                                    <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="mb-3">
-                                                        <button class="btn btn-sm btn-dark">Delete</button>
-                                                    </form>
+                                                        <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="mb-3">
+                                                            <button class="btn btn-sm btn-dark">Delete</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <% } %>
@@ -110,4 +280,26 @@
                                     <% } %>
                     </div>
         </div>
+
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+        <script>
+            const latitude = <%- listing.latitude || 0 %>;
+            const longitude = <%- listing.longitude || 0 %>;
+
+
+            const map = L.map('map').setView([latitude, longitude], 13); // 13 is zoom level
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add a marker at the location
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup('<b><%= listing.title %></b><br><%= listing.location %>')
+                .openPopup();
+        </script>
+
     </body>

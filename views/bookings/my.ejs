@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings | Airbnb Clone</title>
+    <style>
+         :root {
+            --primary-color: #FF385C;
+            --secondary-color: #00A699;
+            --dark-color: #484848;
+            --light-color: #767676;
+            --background-color: #f7f7f7;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Circular', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+            background-color: var(--background-color);
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ebebeb;
+        }
+        
+        .bookings-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .booking-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s;
+        }
+        
+        .booking-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .booking-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .booking-info {
+            padding: 20px;
+        }
+        
+        .booking-title {
+            font-size: 1.3rem;
+            margin: 0 0 10px;
+            color: var(--dark-color);
+        }
+        
+        .booking-dates {
+            color: var(--light-color);
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+        
+        .booking-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .status-confirmed {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .status-pending {
+            background-color: #FFF8E1;
+            color: #FFA000;
+        }
+        
+        .status-cancelled {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--light-color);
+        }
+        
+        .empty-state h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        .explore-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        
+        .explore-btn:hover {
+            background-color: #E61E4D;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>My Bookings</h1>
+
+        <% if (bookings.length > 0) { %>
+            <div class="bookings-container">
+                <% bookings.forEach(b => { %>
+                    <a href="/listings/ <%= b.listing._id %>">
+                        <div class="booking-card">
+                            <div class="booking-image" style="background-image: url('<%= b.listing.image.url %>')"></div>
+                            <div class="booking-info">
+                                <h3 class="booking-title">
+                                    <%= b.listing.title %>
+                                </h3>
+                                <div class="booking-dates">
+                                    <%= b.checkIn.toDateString() %> to
+                                        <%= b.checkOut.toDateString() %>
+                                </div>
+                                <div class="booking-status status-<%= b.status.toLowerCase() %>">
+                                    <%= b.status %>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <% }) %>
+            </div>
+            <% } else { %>
+                <div class="empty-state">
+                    <h2>No bookings yet</h2>
+                    <p>When you make bookings, they'll appear here</p>
+                    <a href="/listings" class="explore-btn">Explore listings</a>
+                </div>
+                <% } %>
+    </div>
+</body>
+
+</html>

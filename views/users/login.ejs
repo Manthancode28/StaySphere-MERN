@@ -1,5 +1,9 @@
 <% layout('layouts/boilerplate.ejs') -%>
     <style>
+        body {
+            background-color: #f7f7f7;
+        }
+        
         .box1 {
             padding: 1rem 2rem 2rem 2rem;
             flex: 1;
@@ -44,10 +48,8 @@
             gap: 2rem;
             /* Add some gap between the image and form */
             padding: 2rem;
-            /* Add some padding around the main box */
-            border: 2px solid black;
             /* Add border to the main box */
-            box-shadow: 0 0 5px #fe424d;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             height: 550px;
             border-radius: 0.5rem;
             background-color: white;
@@ -66,9 +68,15 @@
             background-color: black;
             /* Line color */
         }
-        /* body {
-            background: linear-gradient(135deg, #ffffff, hsl(357, 91%, 92%));
-        } */
+        
+        @media (max-width:768px) {
+            .img-card {
+                display: none;
+            }
+            .main-box {
+                height: 50%;
+            }
+        }
     </style>
 
     <div class="main-box mt-4">
