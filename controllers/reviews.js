@@ -7,7 +7,7 @@ module.exports.createReview = async(req, res) => {
     newReview.author = req.user._id;
     listing.reviews.push(newReview);
     await newReview.save();
-    await listing.save();
+    await listing.save({ validateBeforeSave: false });
     res.redirect(`/listings/${listing._id}`);
 
 };

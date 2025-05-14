@@ -5,12 +5,15 @@
 
             <h2>Edit documentation</h2>
             <form method="POST" action="/listings/<%= listing._id%>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+
+                <!-- Tiltle -->
                 <div class="mb-3">
                     <label for="title" class="form-lable">Title</label>
                     <input type="text" name="listing[title]" value="<%= listing.title %>" class="form-control" required>
                     <div class="invalid-feedback">Enter Title.</div>
                     <div class="valid-feedback">Nice Title😀</div>
                 </div>
+                <!-- Description -->
                 <div class="mb-3">
                     <label for="description" class="form-lable">Description</label>
                     <textarea type="text" name="listing[description]" <%=listing.description %> class="form-control" required></textarea>
@@ -18,15 +21,55 @@
                 </div>
 
 
+                <!-- Category Dropdown -->
                 <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select name="listing[category]" class="form-control" required>
+                    <option value="">--Select Category--</option>
+                    <option value="Trending" <%= listing.category === "Trending" ? "selected" : "" %>>Trending</option>
+                    <option value="Room" <%= listing.category === "Room" ? "selected" : "" %>>Room</option>
+                    <option value="Iconic City" <%= listing.category === "Iconic City" ? "selected" : "" %>>Iconic City</option>
+                    <option value="Mountains" <%= listing.category === "Mountains" ? "selected" : "" %>>Mountains</option>
+                    <option value="Castles" <%= listing.category === "Castles" ? "selected" : "" %>>Castles</option>
+                    <option value="Amazing Pool" <%= listing.category === "Amazing Pool" ? "selected" : "" %>>Amazing Pool</option>
+                    <option value="Farms" <%= listing.category === "Farms" ? "selected" : "" %>>Farms</option>
+                    <option value="Arctic" <%= listing.category === "Arctic" ? "selected" : "" %>>Arctic</option>
+                    <option value="Camping" <%= listing.category === "Camping" ? "selected" : "" %>>Camping</option>
+                    <option value="Sea" <%= listing.category === "Sea" ? "selected" : "" %>>Sea</option>
+                    <option value="Homes" <%= listing.category === "Homes" ? "selected" : "" %>>Tiny Home</option>
+                </select>
+                    <div class="invalid-feedback">Please select a category.</div>
+                </div>
+
+
+                <!-- What this place offer -->
+                <div class="mb-3">
+                    <label class=" mb-2"><b>What this place offers:</b></label><br>
+
+                    <% const allAmenities = ["Lake view", "Mountain view", "Air Conditioning","Board Games", "Hot Water", "Wi-Fi", "Dedicated Workspace", "Parking", "TV", "Kitchen"]; %>
+                        <div class="d-flex flex-wrap gap-3">
+                            <% allAmenities.forEach((amenity) => { %>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="listing[amenities]" value="<%= amenity %>" <%=listing.amenities.includes(amenity) ? "checked" : "" %>>
+                                    <label class="form-check-label"><%= amenity %></label>
+                                </div>
+                                <% }) %>
+                        </div>
+                </div>
+
+
+                <!-- Image -->
+                <div class="mb-3 mt-1">
                     <P>Original Image Preview</P>
-                    <img src="<%= originalImageUrl %>" />
+                    <img src="<%= originalImageUrl %>" style="height: 200px; width: 200px;" />
                 </div>
 
                 <div class="mb-3">
                     <label for="image" class="form-lable">Upload New Image</label>
                     <input type="file" name="listing[image]" class="form-control">
                 </div>
+
+                <!-- Prize Country Location Always make seperate div with .row to devide fields -->
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-lable">Price</label>

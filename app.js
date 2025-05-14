@@ -22,7 +22,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require("./models/user.js");
 const passportLocalMongoose = require('passport-local-mongoose');
-
+const bookingRoutes = require("./routes/bookings");
 
 // const { listingSchema, reviewSchema } = require('./utils/validateListing'); // Import Joi validation schema
 // const wrapAsync = require('./utils/wrapAsync.js');
@@ -115,7 +115,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-
+app.use("/bookings", bookingRoutes);
 
 //Handeling error using wrapAsync function
 // app.use((err, req, res, next) =>{
@@ -136,6 +136,40 @@ app.use((error, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = error;
     res.render("error.ejs", { error });
 });
+
+
+// In your server-side code (app.js or a helpers file)
+function getAmenityIcon(amenity) {
+    const iconMap = {
+        'Wi-Fi': 'fa-wifi',
+        'Pool': 'fa-water',
+        'Kitchen': 'fa-utensils',
+        'Parking': 'fa-car',
+        'Air Conditioning': 'fa-snowflake',
+        'Heating': 'fa-temperature-high',
+        'TV': 'fa-tv',
+        'Washer': 'fa-soap',
+        'Dryer': 'fa-wind',
+        'Gym': 'fa-dumbbell',
+        'Elevator': 'fa-elevator',
+        'Hot Water': 'fa-hot-tub',
+        'Fireplace': 'fa-fire',
+        'Pet Friendly': 'fa-paw',
+        'Smoking Allowed': 'fa-smoking',
+        'Dedicated Workspace': 'fa-laptop',
+        'Breakfast': 'fa-mug-hot',
+        'Lake view': 'fa-water',
+        'Mountain view': 'fa-mountain-sun',
+        'Board Games': 'fa-chess-board'
+            // Add more mappings as needed
+    };
+
+    // Return the matching icon or a default one
+    return `fa-solid ${iconMap[amenity] || 'fa-check'}`;
+}
+
+// Make it available to your templates
+app.locals.getAmenityIcon = getAmenityIcon;
 
 
 

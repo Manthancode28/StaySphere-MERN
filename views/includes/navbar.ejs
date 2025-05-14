@@ -30,6 +30,124 @@
         background-color: #fff;
         gap: 30px;
     }
+    /* Updated CSS */
+    
+    .search-bar {
+        margin-left: 23% !important;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 0.3rem 0.8rem;
+        /* Smaller padding */
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        /* Slightly smaller text */
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+    
+    .inp-search {
+        border-radius: 2rem;
+        padding: 0.2rem 0.8rem;
+        background-color: #f7f7f7;
+        font-size: 0.85rem;
+        height: 2.2rem;
+        white-space: nowrap;
+        min-width: 120px;
+    }
+    
+    .btn-search {
+        background-color: #fe424d;
+        color: #fff;
+        border-radius: 2rem;
+        padding: 0.3rem 1rem;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+    
+    .btn-search i {
+        font-size: 0.75rem;
+        margin-right: 0.4rem;
+    }
+    
+    .btn-search:hover,
+    .btn-search:active {
+        background-color: #fe424d;
+        color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    /* Dropdown menu styling */
+    
+    .dropdown-menu {
+        transition: all 0.2s ease;
+    }
+    
+    .dropdown-item {
+        transition: background-color 0.2s ease;
+        color: #484848;
+    }
+    
+    .dropdown-toggle::after {
+        display: none !important;
+    }
+    
+    .dropdown-item:hover {
+        background-color: #f7f7f7;
+        color: #000;
+    }
+    /* User icon styling */
+    
+    .nav-link.dropdown-toggle {
+        padding: 8px 12px;
+        border-radius: 50%;
+        border: 1px solid #dddddd;
+        background: white;
+    }
+    
+    .nav-link.dropdown-toggle:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-color: #fe424d;
+    }
+    
+    .dropdown-nav {
+        position: relative;
+        right: 1rem;
+    }
+    
+    .dropdown-nav i {
+        font-size: 1.3rem !important;
+    }
+    
+    .nav-link.dropdown-toggle:hover i.bi {
+        color: #fe424d !important;
+    }
+    
+    .nav-link.dropdown-toggle i.bi {
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+    
+    .nav-link.dropdown-toggle:hover i.bi {
+        color: #fe424d !important;
+        transform: scale(1.1);
+    }
+    
+    .nav-btn {
+        padding: 2px 6px;
+        border: none;
+        border-radius: 8px;
+        /* background-color: white; */
+        /* font-weight: bold; */
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.1s ease-in;
+        font-size: smaller;
+    }
+    
+    .nav-btn:hover {
+        /* border: 2px solid #fe424d; */
+        transform: translateY(-1px);
+        /* box-shadow: 0px 0px 4px #fe424d; */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
 </style>
 
 
@@ -41,29 +159,96 @@
       </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <!-- Basic Option -->
-            <div class="navbar-nav">
+            <div class="navbar-nav nav-btn">
                 <a class="nav-link" href="/listings"> Explore</a>
 
             </div>
-            <form class="d-flex ms-auto" role="search" action="/listings/search" method="GET">
-                <label for="location" class="form-label"></label>
-                <input class="form-control me-2 inp-search" type="search" placeholder="Search" aria-label="Search" name="location" id="location">
+            <!-- <form class="d-flex ms-auto" role="search" action="/listings/search" method="GET">
+                <div class="form-group">
+                    <label for="location" class="form-label"></label>
+                    <input class="form-control me-2 inp-search" type="search" placeholder="Search" aria-label="Search" name="location" id="location">
+                </div>
 
-                <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                <div class="form-group date-check">
+                    <label for="checkin">Check-in:</label>
+                    <input type="date" name="checkin" id="checkin" class="form-control" required>
+                </div>
+                <div class="form-group date-ckeck">
+                    <label for="checkout">Check-out:</label>
+                    <input type="date" name="checkout" id="checkout" class="form-control" required>
+                </div>
+                <div class="form-group align-self-end">
+                    <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+                </div>
+            </form> -->
+
+            <form class="d-flex align-items-center justify-content-between gap-2 search-bar mx-auto" action="/listings/search" method="GET" style="max-width: 700px;">
+                <div class="col-12 col-md-auto flex-grow-1">
+                    <input class="form-control border-0 inp-search" type="search" placeholder="Search locations" name="location" id="location">
+                </div>
+
+                <div class="col-6 col-md-auto">
+                    <input type="date" name="checkin" id="checkin" class="form-control border-0 inp-search" required>
+                </div>
+
+                <div class="col-6 col-md-auto">
+                    <input type="date" name="checkout" id="checkout" class="form-control border-0 inp-search" required>
+                </div>
+
+                <div class="col-12 col-md-auto text-end">
+                    <button class="btn btn-search w-100 w-md-auto" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                    </button>
+                </div>
             </form>
             <!-- User Authentication -->
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/listings/new">Add New Listings</a>
-                <% if( !currUser) { %>
-                    <a class="nav-link" href="/signup"> <b> Sign Up</b></a>
-                    <a class="nav-link" href="/login"><b>Log in</b> </a>
-                    <% } %>
-
-                        <% if( currUser) { %>
-                            <a class="nav-link" href="/logout"> <b> Log out</b></a>
-                            <% } %>
-
+            <div class="navbar-nav nav-btn ms-auto" style="position: relative; left: 1rem;">
+                <a class="nav-link mx-3" href="/listings/new">Add New Listings</a>
             </div>
+
+            <div class="navbar-nav ms-auto dropdown-nav">
+                <li class="nav-item dropdown" style="position: relative;">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- <i class="fas fa-user-circle me-1" style="font-size: 1.25rem;"></i> -->
+                        <i class="bi bi-person"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="
+                        position: absolute;
+                        right: 0;
+                        margin-top: 8px;
+                        min-width: 160px;
+                        border-radius: 12px;
+                        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+                        border: 1px solid #ebebeb;
+                        overflow: hidden;
+                        padding: 8px 0;
+                    ">
+                        <% if(!currUser) { %>
+                            <li>
+                                <a class="dropdown-item py-2 px-3" href="/signup" style="font-weight: 500;">Sign Up</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 px-3" href="/login" style="font-weight: 500;">Log In</a>
+                            </li>
+                            <% } %>
+                                <% if(currUser) { %>
+                                    <li>
+                                        <a class="dropdown-item py-2 px-3" href="/logout" style="font-weight: 500;">Log Out</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider my-1" style="border-color: #ebebeb;">
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 px-3" href="/bookings/host">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item py-2 px-3" href="/bookings/my">My Bookings</a>
+                                    </li>
+                                    <% } %>
+                    </ul>
+                </li>
+            </div>
+
         </div>
     </div>
 </nav>

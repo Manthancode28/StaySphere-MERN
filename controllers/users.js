@@ -35,6 +35,7 @@ module.exports.login = async(req, res, next) => {
         res.redirect(redirectUrl);
 
     } else {
+        req.flash("Somthing went worng 😐");
         next(new Error("Login failed"));
         res.redirect("/login");
     }

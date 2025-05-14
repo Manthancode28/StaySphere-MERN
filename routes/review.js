@@ -21,7 +21,7 @@ function validateReview(req, res, next) {
 
 
 //Reviews
-router.post("/", isLoggedIn, validateReview, wrapAsync(reviewController.createReview));
+router.post("/", isLoggedIn, wrapAsync(reviewController.createReview));
 
 //Review Delete Route 
 

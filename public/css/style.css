@@ -3,6 +3,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .container {
@@ -90,13 +92,53 @@ body {
     text-decoration: none;
 }
 
-.card-img-overlay {
-    opacity: 0;
+.listing-card {
+    text-decoration: none;
+    color: inherit;
 }
 
-.card-img-overlay:hover {
-    opacity: 0.2;
-    background-color: white;
+.card-img-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 200px;
+    /* Adjust as needed */
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.23);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+}
+
+.view-details-text {
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.799);
+}
+
+.listing-card:hover .card-img-overlay {
+    opacity: 1;
+}
+
+.listing-card:hover .card-img {
+    transform: scale(1.05);
+}
+
+.listing-card:hover .view-details-text {
+    transform: translateY(0);
 }
 
 
@@ -120,3 +162,227 @@ body {
     height: 500px;
     width: 100%;
 } */
+
+
+/* Show.ejs */
+
+.booking-container {
+    /* position: sticky; */
+    top: 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+}
+
+.booking-container:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.price-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    /* background: linear-gradient(135deg, #6e8efb, #a777e3); */
+    color: rgb(0, 0, 0);
+}
+
+.price-per-night .amount {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.price-per-night .text {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.date-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #f0f0f0;
+    margin: 0 20px;
+    position: relative;
+    top: -10px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.date-input {
+    position: relative;
+    background: white;
+    padding: 20px 15px 15px;
+}
+
+.date-input label {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+.date-input input {
+    border: none;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+    padding-top: 5px;
+}
+
+.guests-selector {
+    position: relative;
+    padding: 20px 15px 15px;
+    margin: 10px 20px 20px;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+}
+
+.guests-selector label {
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+.guests-selector select {
+    border: none;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 500;
+    appearance: none;
+    background: transparent;
+    padding-top: 5px;
+}
+
+.guests-selector i {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    color: #fe424d;
+}
+
+.book-now-btn {
+    background: linear-gradient(to right, #ff5e62, #fe424d);
+    color: white;
+    border: none;
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.book-now-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 94, 98, 0.3);
+}
+
+.book-now-btn i {
+    margin-right: 8px;
+}
+
+.price-breakdown {
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.price-row.total {
+    font-weight: 700;
+    font-size: 17px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 12px;
+}
+
+.trust-badges {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #f9f9f9;
+    border-top: 1px solid #f0f0f0;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #666;
+}
+
+.badge i {
+    margin-right: 6px;
+    color: #fe424d;
+}
+
+
+/* Mobile menu full width adjustments */
+
+
+/* Mobile-specific overflow fixes */
+
+@media (max-width: 991.98px) {
+    /* Ensure navbar doesn't cause horizontal scroll */
+    .navbar-collapse {
+        background-color: white;
+        max-height: calc(100vh - 60px);
+        /* Adjust based on your navbar height */
+        overflow-y: auto;
+        /* Enable vertical scrolling if needed */
+        padding: 0 1rem;
+    }
+    /* Make dropdown menus full width */
+    .dropdown-menu {
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
+    /* Better spacing for mobile menu items */
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+    /* Full-width search inputs */
+    .search-bar,
+    .inp-search {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    /* Stack date inputs vertically */
+    .row.g-2 {
+        flex-direction: column;
+    }
+    .row.g-2>[class^="col-"] {
+        width: 100%;
+        max-width: 100%;
+    }
+    /* Remove nowrap from buttons */
+    .btn-search {
+        white-space: normal;
+    }
+    /* Ensure user menu fits */
+    #mobile-user .dropdown-toggle {
+        display: block;
+        text-align: left;
+        padding: 0.5rem 1rem;
+    }
+}

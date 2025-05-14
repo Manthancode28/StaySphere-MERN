@@ -9,6 +9,7 @@ console.log("Listing model import successfully");
 
 const dbURL = process.env.ATLASDB_URL;
 
+
 if (!dbURL) {
     console.error("Error: ATLASDB_URL is undefined. Please check your .env file.");
     process.exit(1); // Exit if MongoDB URL is not found
