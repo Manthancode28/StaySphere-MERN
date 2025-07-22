@@ -1,15 +1,7 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 
-// Validation Middleware
-// function validateListingData(req, res, next) {
-//     const { error } = listingSchema.validate(req.body.listing);
-//     if (error) {
-//         const errorMessages = error.details.map(err => err.message);
-//         return res.status(400).render("error", { error: { statusCode: 400, message: errorMessages.join(', ') } });
-//     }
-//     next();
-// }
+
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {

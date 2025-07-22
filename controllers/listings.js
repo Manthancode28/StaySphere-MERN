@@ -1,16 +1,14 @@
 const Listing = require("../models/listing");
 const geocoder = require('node-geocoder')({
-    provider: 'openstreetmap', // You can use OpenStreetMap as the provider
+    provider: 'openstreetmap', 
     httpAdapter: 'https',
-    apiKey: null, // No API key needed for OpenStreetMap
+    apiKey: null, 
     formatter: null
 });
 
 
 
 module.exports.index = async(req, res) => {
-    // const allListings = await Listing.find({});
-    // res.render("listings/index", { allListings });
 
     const { category } = req.query;
     let allListings;
@@ -33,7 +31,7 @@ module.exports.renderNewForm = (req, res) => {
 module.exports.showListing = async(req, res) => {
     try {
         const { id } = req.params;
-        const trimmedId = id.trim(); // Remove leading/trailing spaces
+        const trimmedId = id.trim(); 
         const listing = await Listing.findById(trimmedId).populate({ path: "reviews", populate: { path: "author" } }).populate("owner");
         if (!listing) {
             req.flash("error", "Listing not found");
@@ -41,7 +39,6 @@ module.exports.showListing = async(req, res) => {
         }
         res.render("listings/show", { listing });
     } catch (error) {
-        // console.error("Error fetching listing:", error);
         res.status(400).send("Invalid ID format");
 
     }
@@ -49,17 +46,14 @@ module.exports.showListing = async(req, res) => {
 
 module.exports.createListing = async(req, res, next) => {
 
-    // Geocode the location (city)
-    const { location } = req.body.listing; // City name entered by the user
+    const { location } = req.body.listing; 
     const geocodeResult = await geocoder.geocode(location);
 
-    // If geocodeResult is empty, location is invalid
     if (!geocodeResult.length) {
         req.flash('error', 'Invalid city name');
         return res.redirect('/listings/new');
     }
 
-    // Extract latitude and longitude from the geocode result
     const { latitude, longitude } = geocodeResult[0];
 
     let url = req.file.path;
@@ -69,7 +63,7 @@ module.exports.createListing = async(req, res, next) => {
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
 
-    newListing.latitude = latitude; // Save latitude
+    newListing.latitude = latitude; 
     newListing.longitude = longitude;
 
 
@@ -98,23 +92,21 @@ module.exports.updateListing = async(req, res) => {
 
     let listingData = {...req.body.listing };
 
-    // If location is being updated, geocode the new location
+ 
     if (listingData.location) {
         const geocodeResult = await geocoder.geocode(listingData.location);
 
-        // If geocodeResult is empty, location is invalid
+
         if (!geocodeResult.length) {
             req.flash('error', 'Invalid city name');
             return res.redirect(`/listings/${id}/edit`);
         }
 
-        // Extract latitude and longitude from the geocode result
         const { latitude, longitude } = geocodeResult[0];
         listingData.latitude = latitude;
         listingData.longitude = longitude;
     }
 
-    // Update the listing with all data including potential new coordinates
     let listing = await Listing.findByIdAndUpdate(id, listingData, { new: true });
 
     listing.amenities = req.body.listing.amenities || [];

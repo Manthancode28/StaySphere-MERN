@@ -24,13 +24,10 @@ const User = require("./models/user.js");
 const passportLocalMongoose = require('passport-local-mongoose');
 const bookingRoutes = require("./routes/bookings");
 
-// const { listingSchema, reviewSchema } = require('./utils/validateListing'); // Import Joi validation schema
-// const wrapAsync = require('./utils/wrapAsync.js');
-// const Listing = require("./models/listing.js");
+
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
-// const { error } = require('console');
 const userRouter = require("./routes/user.js");
 
 
@@ -83,14 +80,11 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
-// Use flash before routes 
 
-//Passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-// use static serialize and deserialize of model for passport session support
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -102,35 +96,19 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.get("/demouser", async(req, res) => {
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student"
-//     });
-
-//     const registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// })
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/bookings", bookingRoutes);
 
-//Handeling error using wrapAsync function
-// app.use((err, req, res, next) =>{
-// res.send("Something went wrong");
-// })
 
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not found😕"));
 });
 
-// app.use((err, req, res, next) => {
-//     const { statusCode = 500, message = "Something went wrong" } = err;
-//     res.render("error", { message });
-// });
+
 
 app.use((error, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = error;
@@ -138,7 +116,6 @@ app.use((error, req, res, next) => {
 });
 
 
-// In your server-side code (app.js or a helpers file)
 function getAmenityIcon(amenity) {
     const iconMap = {
         'Wi-Fi': 'fa-wifi',
@@ -161,14 +138,12 @@ function getAmenityIcon(amenity) {
         'Lake view': 'fa-water',
         'Mountain view': 'fa-mountain-sun',
         'Board Games': 'fa-chess-board'
-            // Add more mappings as needed
+           
     };
 
-    // Return the matching icon or a default one
     return `fa-solid ${iconMap[amenity] || 'fa-check'}`;
 }
 
-// Make it available to your templates
 app.locals.getAmenityIcon = getAmenityIcon;
 
 

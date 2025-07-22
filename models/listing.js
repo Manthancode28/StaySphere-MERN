@@ -13,42 +13,13 @@ const listingSchema = new Schema({
         required: true,
     },
     image: {
-        // filename: {
-        //     type: String,
-        // },
-        // url: {
-        //     type: String,
-        // },
+        
         url: String,
         filename: String,
-        // default: "https://images.squarespace-cdn.com/content/v1/5e72c8bfe21ad940ba788673/1626985470666-LVUUK5JZ5LE0O893756Z/what-is-airbnb-thumbnail.jpg",
     },
-    latitude: Number, // Latitude of the location
+    latitude: Number,
     longitude: Number, // Longitude of the location
-    // image: {
-    //     type: Map,
-    //     of: String, // This will allow you to store an object with properties like filename and url
-    //     default: {
-    //         filename: 'defaultImage',
-    //         url: 'https://images.squarespace-cdn.com/content/v1/5e72c8bfe21ad940ba788673/1626985470666-LVUUK5JZ5LE0O893756Z/what-is-airbnb-thumbnail.jpg',
-    //     },
-    // },
-    // image: {
-    //     type: {
-    //         filename: String,
-    //         url: String,
-    //     },
-    //     default: {
-    //         filename: 'defaultImage',
-    //         url: 'https://images.squarespace-cdn.com/content/v1/5e72c8bfe21ad940ba788673/1626985470666-LVUUK5JZ5LE0O893756Z/what-is-airbnb-thumbnail.jpg',
-    //     },
-    // },
-    // image: {
-    //     type: String,
-    //     default: 'https://images.squarespace-cdn.com/content/v1/5e72c8bfe21ad940ba788673/1626985470666-LVUUK5JZ5LE0O893756Z/what-is-airbnb-thumbnail.jpg',
-    // },
-
-
+   
     price: Number,
     location: String,
     country: String,

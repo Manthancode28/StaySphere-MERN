@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const { listingSchema, reviewSchema } = require('../utils/validateListing'); // Import Joi validation schema
 const wrapAsync = require('../utils/wrapAsync.js');
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
@@ -43,29 +42,9 @@ router.route("/:id")
 
 
 
-//Index Route
-// router.get("/", wrapAsync(listingController.index));
-
-
-
-//show routes 
-// router.get("/:id", listingController.showListing);
-
-
-
-//create listing
-// router.post("/", isLoggedIn, wrapAsync(listingController.createListing));
-
-
-
 // Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderEditForm))
 
-//Update Route
-// router.put("/:id", isLoggedIn, isOwner, wrapAsync(listingController.updateListing))
 
-
-//Delete Route 
-// router.delete("/:id", isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
 module.exports = router;

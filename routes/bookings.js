@@ -53,9 +53,6 @@ router.get('/my', isLoggedIn, async(req, res) => {
     res.render('bookings/my', { bookings });
 });
 
-// In your routes file
-// router.get('/my-bookings', (req, res) => {
-//     res.render('bookings/my'); // assuming my.ejs is in your views folder
-// });
+
 
 module.exports = router;

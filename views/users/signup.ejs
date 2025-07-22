@@ -7,7 +7,6 @@
         .box1 {
             padding: 1rem 2rem 2rem 2rem;
             flex: 1;
-            /* Make the form take equal space */
         }
         
         .f-info {
@@ -16,59 +15,40 @@
         
         .img-card {
             flex: 1;
-            /* Make image take equal space */
             text-align: center;
-            /* Center the image */
             display: flex;
             align-items: center;
-            /* Vertically center the image */
             justify-content: center;
-            /* Horizontally center the image */
             position: relative;
-            /* Required for the pseudo-element */
         }
         
         .img-card img {
             max-width: 100%;
-            /* Ensure the image doesn't overflow */
             height: 100%;
-            /* Make the image cover the height of the div */
             object-fit: cover;
-            /* Ensure the image covers the entire space */
             border-radius: 1rem;
-            /* Optional: Add border radius to the image */
         }
         
         .main-box {
             display: flex;
             align-items: stretch;
-            /* Stretch items to match height */
             justify-content: space-between;
-            /* Add space between the image and form */
             gap: 2rem;
-            /* Add some gap between the image and form */
             padding: 2rem;
-            /* Add some padding around the main box */
-            /* border: 2px solid black; */
-            /* Add border to the main box */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             height: 550px;
             border-radius: 0.5rem;
             background-color: white;
         }
-        /* Add a line between the image and the form */
         
         .img-card::after {
             content: '';
             position: absolute;
             right: -1rem;
-            /* Position the line to the right of the image */
             top: 0;
             bottom: 0;
             width: 2px;
-            /* Line thickness */
             background-color: black;
-            /* Line color */
         }
         
         @media (max-width: 768px) {
