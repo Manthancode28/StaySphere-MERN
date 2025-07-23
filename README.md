@@ -15,10 +15,15 @@ StaySphere is a short-term property rental website inspired by Airbnb, allowing 
 
 ## 🛠️ Tech Stack
 
-**Frontend**: HTML,CSS, JavaScript, Bootstrap, EJS (Embedded JavaScript templates)
-**Backend**: Node.js, Express.js
-**Database**: MongoDB
+**Frontend**: HTML,CSS, JavaScript, Bootstrap, EJS (Embedded JavaScript templates) <br>
+**Backend**: Node.js, Express.js <br>
+**Database**: MongoDB <br>
 **Other Libraries/Tools**: Bootstrap,Font Awesome, Passport.js, bcrypt, Cloudinary
 
 
+---
 
+## 🌐 Live Demo
+https://staysphere-4t14.onrender.com/listings
+
+---
